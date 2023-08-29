@@ -1,4 +1,6 @@
-# Backend Project Directus
+# Automated Directus Setup with Docker and Schema Versioning
+
+The purpose of this project is to provide an automated installation system for Directus with preconfigured Docker settings. It facilitates automatic migration through the generation and application of translated database schema snapshots. These snapshots can be versioned, streamlining teamwork and project versioning processes.
 
 Follow the steps below in the src/ folder to configure and run the project locally.
 
