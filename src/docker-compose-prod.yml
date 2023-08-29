@@ -1,0 +1,52 @@
+version: "3"
+services:
+  database:
+    image: postgis/postgis:13-master
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "directus"
+      POSTGRES_DB: "directus"
+
+  cache:
+    image: redis:6
+
+  directus:
+    image: directus/directus:10.5.3
+    ports:
+      - 8055:8055
+    volumes:
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+      - ./snapshots:/directus/snapshots
+    depends_on:
+      - cache
+      - database
+    environment:
+      KEY: "255d861b-5ea1-5996-9aa3-922530ec40b1"
+      SECRET: "6116487b-cda1-52c2-b5b5-c8022c45e263"
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "directus"
+      DB_PASSWORD: "directus"
+      CACHE_ENABLED: "true"
+      CACHE_STORE: "redis"
+      REDIS: "redis://cache:6379"
+      CACHE_AUTO_PURGE: "true"
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "true"
+      CORS_METHODS: "GET,POST,PATCH,DELETE"
+      CORS_ALLOWED_HEADERS: "Content-Type,Authorization"
+      CORS_EXPOSED_HEADERS: "Content-Range"
+      CORS_CREDENTIALS: "true"
+      CORS_MAX_AGE: "18000"
+      CONTENT_SECURITY_POLICY_DIRECTIVES__MEDIA_SRC: "'self' https://directus.acg-x-ferias.fr * blob:"
+      CONTENT_SECURITY_POLICY_DIRECTIVES__IMG_SRC: "'self' * blob data:"
+      CONTENT_SECURITY_POLICY_DIRECTIVES__CONNECT_SRC: "'self' https://* wss://*"
+
+      ADMIN_EMAIL: matthieu.gelle@gmail.com
+      ADMIN_PASSWORD: NB5ihGeDYzTyQ4L4
+      PUBLIC_URL: https://directus.acg-x-ferias.fr
