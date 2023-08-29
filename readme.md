@@ -1,6 +1,6 @@
 # Backend Project Directus
 
-Follow the steps below to configure and run the project locally.
+Follow the steps below in the src/ folder to configure and run the project locally.
 
 ## Prerequisites
 
